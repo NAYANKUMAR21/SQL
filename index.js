@@ -1,30 +1,28 @@
-function countBeautifulArrangements(n) {
-  let count = 0;
-  const used = new Array(n + 1).fill(false);
+let arr = [5, 4, -1, 7, 8];
+let maxSum = arr[0];
+let currentSum = arr[0];
+for (let i = 1; i < arr.length; i++) {
+  currentSum = Math.max(arr[i], currentSum + arr[i]);
+  maxSum = Math.max(maxSum, currentSum);
+}
+console.log(maxSum);
+currentSum = arr[0];
+maxSum = arr[0];
 
-  function isBeautiful(num, pos) {
-    return num % pos === 0 || pos % num === 0;
-  }
-
-  function backtrack(pos) {
-    if (pos > n) {
-      count++;
-      return;
-    }
-
-    for (let i = 1; i <= n; i++) {
-      if (!used[i] && isBeautiful(i, pos)) {
-        used[i] = true;
-        backtrack(pos + 1);
-        used[i] = false;
-      }
-    }
-  }
-
-  backtrack(1);
-  return count;
+for (let i = 1; i < arr.length; i++) {
+  currentSum = Math.max(arr[i], currentSum + arr[i]);
+  maxSum = Math.max(maxSum, currentSum);
 }
 
-const n = 4;
-const beautifulArrangements = countBeautifulArrangements(n);
-console.log(beautifulArrangements); // Output: 10
+console.log(maxSum);
+let max = -Infinity;
+for (let i = 0; i < arr.length; i++) {
+  let sum = 0;
+  for (let j = i; j < arr.length; j++) {
+    sum += arr[j];
+    if (sum > max) {
+      max = sum;
+    }
+  }
+}
+console.log(max);
