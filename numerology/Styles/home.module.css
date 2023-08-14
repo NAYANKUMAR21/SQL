@@ -1,0 +1,64 @@
+.image_container {
+  position: relative;
+  display: inline-block;
+  max-width: 100%; /* Limit the width of the container */
+}
+
+.image_container img {
+  display: block;
+  max-width: 100%;
+}
+
+.image_container button {
+  position: absolute;
+  top: 50%; /* Position the button near the top */
+  left: 50%;
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Center the button both horizontally and vertically */
+  background-color: #3498db;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s ease; /* Add a smooth transition effect */
+}
+
+.image_container button:hover {
+  background-color: #2980b9; /* Change the background color on hover */
+}
+.image_container {
+  position: relative;
+  display: inline-block;
+}
+
+.image_container img {
+  display: block;
+  max-width: 100%;
+}
+
+.overlay_button {
+  position: absolute;
+  top: 10px; /* Adjust the distance from the top */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: transparent; /* Make the background transparent */
+  color: white;
+  padding: 8px 16px;
+  border: 2px solid white; /* Add a border */
+  border-radius: 5px; /* Add rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Add a smooth transition */
+}
+
+.overlay_button:hover {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.3
+  ); /* Add a background color on hover */
+}
