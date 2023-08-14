@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import {
   Box,
   Button,
@@ -21,9 +22,10 @@ import {
 import { BsGithub, BsLinkedin, BsPerson, BsTwitter } from 'react-icons/bs';
 import { MdEmail, MdOutlineEmail } from 'react-icons/md';
 import { FaBirthdayCake } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
+import { InputValueContext } from '@/Components/COntext';
 
 const confetti = {
   light: {
@@ -46,40 +48,31 @@ export default function ContactFormWithSocialButtons() {
     position: 'top',
     title: 'Container style is updated',
   });
-  const [state, setState] = useState({
-    Name: '',
-    date: '',
-    message: '',
-  });
+  const { inputValue, handleChange } = useContext(InputValueContext);
+  console.log(inputValue, handleChange);
+
   const router = useRouter();
   useEffect(() => {
-    localStorage.setItem('Credentails', '');
+    localStorage.removeItem('Credentails');
   }, []);
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setState({ ...state, [name]: value });
-  };
   const handleCLick = () => {
-    const { Name, message, date } = state;
-    console.log(state);
-
-    if (!Name || !message || !date) {
+    const { Name, date } = inputValue;
+    console.log(inputValue);
+    if (!Name || !date) {
       return toast({
         status: 'warning',
         title: 'Dont Leave any feilds empty refill the feilds',
       });
     }
-    if (!Name.includes(' ')) {
-      return toast({
-        title: 'first,middle,last Name Should have spaces between them',
-      });
-    }
+    console.log({
+      ...inputValue,
+      Name: Name.split(' ').join('').toUpperCase(),
+    });
 
-    console.log({ ...state, Name: Name.split(' ').join('').toUpperCase() });
     localStorage.setItem(
       'Credentails',
       JSON.stringify({
-        ...state,
+        ...inputValue,
         Name: Name.split(' ').join('').toUpperCase(),
       })
     );
@@ -217,6 +210,7 @@ export default function ContactFormWithSocialButtons() {
                         onChange={handleChange}
                         type="text"
                         name="Name"
+                        value={inputValue.Name}
                         placeholder="Your Full Name"
                       />
                     </InputGroup>
@@ -233,12 +227,13 @@ export default function ContactFormWithSocialButtons() {
                         onChange={handleChange}
                         type="date"
                         name="date"
+                        value={inputValue.date}
                         placeholder="Enter Your DOB"
                       />
                     </InputGroup>
                   </FormControl>
 
-                  <FormControl isRequired>
+                  {/* <FormControl isRequired>
                     <FormLabel>Prior message that needs to be sent</FormLabel>
 
                     <Textarea
@@ -248,7 +243,7 @@ export default function ContactFormWithSocialButtons() {
                       rows={6}
                       resize="none"
                     />
-                  </FormControl>
+                  </FormControl> */}
 
                   <Button
                     onClick={handleCLick}

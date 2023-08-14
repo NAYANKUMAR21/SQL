@@ -17,7 +17,6 @@ const NoticeBoard = ({ message }) => {
   });
   const router = useRouter();
   const handleRoute = () => {
-    localStorage.removeItem('Credentials');
     return router.push('/numerology');
   };
   useEffect(() => {
