@@ -10,7 +10,6 @@ app.get('/get-todo', async (req, res) => {
   try {
     console.log(req.body);
     const [results] = await pool.query(`select *from Todos`);
-
     return res.status(200).send({ message: 'Data fetched', data: results });
   } catch (er) {
     return console.log(er.message);
@@ -24,12 +23,12 @@ app.post('/add-todo', async (req, res) => {
       `insert into Todos (title,sentence) values(?,?)`,
       [title, sentence]
     );
-
     return res.status(201).send({ message: 'data added successfully', x });
   } catch (er) {
     return console.log(er.message);
   }
 });
+
 app.listen(PORT, async () => {
   console.log(`Listening on ${PORT}`);
 });

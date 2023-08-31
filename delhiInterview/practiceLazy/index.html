@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practice Lazy</title>
+    <style>
+      img {
+        width: 100%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        object-position: cover;
+      }
+      .blur-load {
+        width: 70%;
+        background-size: cover;
+        background-position: center;
+      }
+      .blur-load.loaded > img {
+        opacity: 1;
+      }
+      .blur-load > img {
+        opacity: 0;
+        transition: opacity 200ms ease-in-out;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="blur-load" style="background-image: url(assets/img1-small.jpg)">
+      <img src="assets/img1.jpg" alt="" loading="lazy" />
+    </div>
+  </body>
+  <script>
+    const singleDiv = document.querySelector('.blur-load');
+    let OriginalImage = singleDiv.querySelector('img');
+    function LoadedFn() {
+      singleDiv.classList.add('loaded');
+    }
+    if (OriginalImage.complete) {
+      LoadedFn();
+    } else {
+      OriginalImage.addEventListener('load', LoadedFn);
+    }
+  </script>
+</html>
