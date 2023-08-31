@@ -1,0 +1,29 @@
+.blur_load {
+  width: 50%;
+
+  border: 1px solid black;
+  margin-right: 10em;
+  background-size: cover;
+  background-position: cover;
+}
+img {
+  aspect-ratio: 1/1;
+  width: 100%;
+  object-fit: cover;
+  object-position: cover;
+}
+.blur_load.loaded > img {
+  opacity: 1;
+}
+.blur_load > img {
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
+}
+.LazyLoad {
+  opacity: 0;
+  transition: all 1s ease-in-out;
+}
+
+.is_visible {
+  opacity: 1;
+}

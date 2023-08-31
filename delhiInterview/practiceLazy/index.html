@@ -10,9 +10,10 @@
         aspect-ratio: 1/1;
         object-fit: cover;
         object-position: cover;
+        border-radius: 10px;
       }
+
       .blur-load {
-        width: 70%;
         background-size: cover;
         background-position: center;
       }
@@ -21,25 +22,99 @@
       }
       .blur-load > img {
         opacity: 0;
+        border-radius: 10px;
+
         transition: opacity 200ms ease-in-out;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
       }
     </style>
   </head>
   <body>
-    <div class="blur-load" style="background-image: url(assets/img1-small.jpg)">
-      <img src="assets/img1.jpg" alt="" loading="lazy" />
+    <div class="grid">
+      <div
+        class="blur-load"
+        style="background-image: url(assets/img1-small.jpg)"
+      >
+        <img src="assets/img1.jpg" alt="" loading="lazy" />
+      </div>
+      <div
+        class="blur-load"
+        style="background-image: url(assets/img1-small.jpg)"
+      >
+        <img src="assets/img1.jpg" alt="" loading="lazy" />
+      </div>
+      <div
+        class="blur-load"
+        style="background-image: url(assets/img1-small.jpg)"
+      >
+        <img src="assets/img1.jpg" alt="" loading="lazy" />
+      </div>
+      <div
+        class="blur-load"
+        style="background-image: url(assets/img1-small.jpg)"
+      >
+        <img src="assets/img1.jpg" alt="" loading="lazy" />
+      </div>
+      <div
+        class="blur-load"
+        style="background-image: url(assets/img1-small.jpg)"
+      >
+        <img src="assets/img1.jpg" alt="" loading="lazy" />
+      </div>
+      <div
+        class="blur-load"
+        style="background-image: url(assets/img1-small.jpg)"
+      >
+        <img src="assets/img1.jpg" alt="" loading="lazy" />
+      </div>
+      <div
+        class="blur-load"
+        style="background-image: url(assets/img1-small.jpg)"
+      >
+        <img src="assets/img1.jpg" alt="" loading="lazy" />
+      </div>
+      <div
+        class="blur-load"
+        style="background-image: url(assets/img1-small.jpg)"
+      >
+        <img src="assets/img1.jpg" alt="" loading="lazy" />
+      </div>
+      <div
+        class="blur-load"
+        style="background-image: url(assets/img1-small.jpg)"
+      >
+        <img src="assets/img1.jpg" alt="" loading="lazy" />
+      </div>
+      <div
+        class="blur-load"
+        style="background-image: url(assets/img1-small.jpg)"
+      >
+        <img src="assets/img1.jpg" alt="" loading="lazy" />
+      </div>
+      <div
+        class="blur-load"
+        style="background-image: url(assets/img1-small.jpg)"
+      >
+        <img src="assets/img1.jpg" alt="" loading="lazy" />
+      </div>
     </div>
   </body>
   <script>
-    const singleDiv = document.querySelector('.blur-load');
-    let OriginalImage = singleDiv.querySelector('img');
-    function LoadedFn() {
-      singleDiv.classList.add('loaded');
-    }
-    if (OriginalImage.complete) {
-      LoadedFn();
-    } else {
-      OriginalImage.addEventListener('load', LoadedFn);
-    }
+    const singleDiv = document.querySelectorAll('.blur-load');
+    singleDiv.forEach((div) => {
+      let OriginalImage = div.querySelector('img');
+      function LoadedFn() {
+        div.classList.add('loaded');
+      }
+      if (OriginalImage.complete) {
+        LoadedFn();
+      } else {
+        OriginalImage.addEventListener('load', LoadedFn);
+      }
+    });
   </script>
 </html>
