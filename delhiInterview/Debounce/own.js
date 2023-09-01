@@ -9,7 +9,7 @@ const updateDebounceText = debounceFn(callback, delay('component'));
 
 inputTag.addEventListener('input', (e) => {
   defaultText.textContent = e.target.value;
-  updateDebounceText(e.target.value, 1500);
+  updateDebounceText(e.target.value);
 });
 
 function debounceFn(cb, delay = 1000) {
@@ -23,10 +23,10 @@ function debounceFn(cb, delay = 1000) {
 }
 function delay(type) {
   if ('Search' === type) {
-    return 1500;
+    return 1000;
   } else if ('component' == type) {
-    return 2000;
+    return 500;
   } else {
-    return 2500;
+    return 250;
   }
 }
