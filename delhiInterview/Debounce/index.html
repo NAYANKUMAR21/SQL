@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Debounce | Home</title>
+    <style>
+      .margin {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+      }
+      #default-text {
+        font-weight: 100;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center">
+      <div>
+        <input type="text" placeholder="Enter text" id="input" />
+        <div class="margin">
+          <h1>Default:</h1>
+          <h1 id="default-text"></h1>
+        </div>
+        <div class="margin">
+          <h1>Debounce :</h1>
+          <span id="debounce-text"></span>
+        </div>
+        <div class="margin">
+          <h1>Throttle</h1>
+          <span id="throttle-text"></span>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="./own.js"></script>
+</html>
