@@ -1,0 +1,26 @@
+.container {
+  width: 80%;
+
+  margin: auto;
+  columns: 3;
+  column-gap: 10px;
+}
+img {
+  border-radius: 10px;
+  width: 100%;
+}
+.Input {
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  margin: auto;
+}
+input {
+  padding: 10px;
+}
+.Input > input {
+  padding: 10px;
+}
+h1 {
+  text-align: center;
+}
