@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import useLoading from '../Hooks/useLoading';
 function App() {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(1);

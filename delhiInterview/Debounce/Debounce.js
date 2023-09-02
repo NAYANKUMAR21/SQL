@@ -16,10 +16,10 @@ inputTag.addEventListener('input', (e) => {
 
 function debounceFn(cb, delay = 1000) {
   console.log(3, cb);
+  let timeOut;
   return (...args) => {
-    console.log(4);
-    console.log('->', args, cb, delay);
-    setTimeout(() => {
+    clearTimeout(timeOut);
+    timeOut = setTimeout(() => {
       cb(...args);
     }, delay);
   };
