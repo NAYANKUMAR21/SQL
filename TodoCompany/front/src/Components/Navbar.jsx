@@ -6,7 +6,12 @@ import { USER_LOGOUT } from '../Redux/Types/Auth.types';
 const Navbar = () => {
   const dispatch = useDispatch();
   return (
-    <Box textAlign={'center'} m="auto" p="15px">
+    <Box
+      textAlign={'center'}
+      m="auto"
+      p="15px"
+      bgGradient="linear(to-r, orange.200, blue.400)"
+    >
       <Box>
         <Button
           cursor={'pointer'}

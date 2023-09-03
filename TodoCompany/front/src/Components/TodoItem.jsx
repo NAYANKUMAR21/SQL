@@ -2,16 +2,20 @@ import React, { useState } from 'react';
 import { Box, Text, IconButton, Flex } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import EditTodoModal from './EditTodoModal';
+import { useDispatch } from 'react-redux';
+import { deleteTodo, getSingleUserTodo } from '../Redux/Actions/TodoActions';
 
 const TodoItem = ({ todo, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
-
+  const dispatch = useDispatch();
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
   const handleDeleteClick = () => {
-    onDelete(todo.id);
+    return dispatch(deleteTodo(todo._id)).then((res) =>
+      dispatch(getSingleUserTodo())
+    );
   };
 
   return (
@@ -32,7 +36,7 @@ const TodoItem = ({ todo, onDelete }) => {
         <>
           <Box width={['90%', '80%', '70%', '60%', '50%']}>
             <Text fontSize="lg" fontWeight="bold" mr={2}>
-              {todo.text}
+              {todo.title}
             </Text>
           </Box>
           <Flex>

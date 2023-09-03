@@ -1,6 +1,16 @@
-import React, { useState } from 'react';
-import { VStack, Input, Button, Box, Grid } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import {
+  VStack,
+  Input,
+  Button,
+  Box,
+  Grid,
+  Stack,
+  Skeleton,
+} from '@chakra-ui/react';
 import TodoItem from './TodoItem';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTodo, getSingleUserTodo } from '../Redux/Actions/TodoActions';
 
 const TodoList = () => {
   const [todos, setTodos] = useState([
@@ -8,10 +18,14 @@ const TodoList = () => {
     { id: 2, text: 'Task 2' },
     // Add more initial todos as needed.
   ]);
-  
+  const { data, laoding } = useSelector((state) => state.Todo);
+  const dispatch = useDispatch();
   const [newTodoText, setNewTodoText] = useState('');
-
+  console.log(data);
   const handleAddTodo = (e) => {
+    dispatch(addTodo(newTodoText)).then((res) => {
+      dispatch(getSingleUserTodo());
+    });
     e.preventDefault();
     if (newTodoText.trim() !== '') {
       const newTodo = {
@@ -27,7 +41,18 @@ const TodoList = () => {
     const updatedTodos = todos.filter((todo) => todo.id !== id);
     setTodos(updatedTodos);
   };
-
+  useEffect(() => {
+    dispatch(getSingleUserTodo());
+  }, []);
+  if (laoding) {
+    return (
+      <Stack>
+        <Skeleton height="50px" />
+        <Skeleton height="50px" />
+        <Skeleton height="50px" />
+      </Stack>
+    );
+  }
   return (
     <VStack
       spacing={4}
@@ -37,6 +62,8 @@ const TodoList = () => {
       <Box w={['90%', '80%', '70%', '60%', '50%']} borderRadius="md" p={4}>
         <form action="" onSubmit={handleAddTodo}>
           <Input
+            color={'white'}
+            fontSize={'xl'}
             value={newTodoText}
             onChange={(e) => setNewTodoText(e.target.value)}
             placeholder="Add a new TODO"
@@ -57,9 +84,10 @@ const TodoList = () => {
         ]}
         gap={10}
       >
-        {todos.map((todo) => (
-          <TodoItem key={todo.id} todo={todo} onDelete={handleDeleteTodo} />
-        ))}
+        {data.length !== 0 &&
+          data?.map((todo) => (
+            <TodoItem key={todo.id} todo={todo} onDelete={handleDeleteTodo} />
+          ))}
       </Grid>
     </VStack>
   );

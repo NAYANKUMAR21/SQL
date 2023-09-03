@@ -8,7 +8,7 @@ const {
   USER_SIGNUP_ERROR,
 } = require('../Types/Auth.types');
 
-const backendUrl = process.env.REACT_APP_BACKEND_URL;
+let backendUrl = process.env.REACT_APP_BACKEND_URL || `http://localost:8080`;
 
 export const LoginAction = (cred) => async (dispatch, state) => {
   try {

@@ -13,7 +13,7 @@ const Allroutes = () => {
   return (
     <Routes>
       <Route
-        path="/:id"
+        path="/"
         element={
           <Adhoc>
             <Navbar />

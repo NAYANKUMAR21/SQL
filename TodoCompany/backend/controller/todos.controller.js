@@ -6,7 +6,9 @@ async function getAll(req, res) {
   try {
     if (token.length !== 0) {
       const verify = jwt.verify(token, JWT_KEY);
-      let todos = await todoModel.findById(verify.id);
+
+      let todos = await todoModel.find({ user: verify.id });
+
       return res.status(201).send(todos);
     }
     return res.status(404).send({ message: 'User not authorized' });
@@ -31,13 +33,14 @@ async function getSingle(req, res) {
 async function AddTodo(req, res) {
   const token = req.headers.authorization;
   const { title } = req.body;
+
   try {
     if (token.length !== 0) {
       const verify = jwt.verify(token, JWT_KEY);
       if (!verify.id) {
         return res.status(200).send({ message: 'Token not in authorization' });
       }
-      console.log(token);
+
       await todoModel.create({
         user: verify.id,
         title,
@@ -51,17 +54,18 @@ async function AddTodo(req, res) {
 }
 async function updateTodo(req, res) {
   const token = req.headers.authorization;
-  const { id, title, isCompleted } = req.body;
+  const { id, title } = req.body;
   try {
     if (token.length !== 0) {
       const verify = jwt.verify(token, JWT_KEY);
+
       if (!verify.id) {
-        return res.status(200).send({ message: 'Token not in authorization' });
+        return res.status(404).send({ message: 'Token not in authorization' });
       }
 
       let todos = await todoModel.findByIdAndUpdate(
         { _id: id },
-        { title, isCompleted },
+        { title },
         { new: true }
       );
       return res.status(201).send(todos);

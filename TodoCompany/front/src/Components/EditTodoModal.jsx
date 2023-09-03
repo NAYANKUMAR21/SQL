@@ -10,19 +10,25 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
+import { getSingleUserTodo, patchTodo } from '../Redux/Actions/TodoActions';
 
 const EditTodoModal = ({ todo, onClose }) => {
-  const [editedText, setEditedText] = useState(todo.text);
+  const [editedText, setEditedText] = useState(todo.title);
 
   const handleTextChange = (e) => {
     setEditedText(e.target.value);
   };
-
+  const dispatch = useDispatch();
   const handleSave = () => {
     // Implement your save logic here, e.g., update the todo with the new text.
     // For simplicity, we'll just log the new text here.
     console.log(`Edited text: ${editedText}`);
     onClose();
+    console.log(editedText);
+    return dispatch(patchTodo(todo._id, editedText)).then((res) =>
+      dispatch(getSingleUserTodo())
+    );
   };
 
   return (

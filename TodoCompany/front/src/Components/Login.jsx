@@ -31,7 +31,7 @@ const Login = () => {
     return console.log(cred);
   };
   if (Auth.data.isAuth) {
-    return <Navigate to={`/${localStorage.getItem('token')}`} />;
+    return <Navigate to={`/`} />;
   }
   return (
     <Flex
