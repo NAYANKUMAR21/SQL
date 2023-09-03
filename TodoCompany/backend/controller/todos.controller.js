@@ -32,6 +32,7 @@ async function getSingle(req, res) {
 
 async function AddTodo(req, res) {
   const token = req.headers.authorization;
+
   const { title } = req.body;
 
   try {

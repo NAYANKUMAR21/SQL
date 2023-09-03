@@ -6,8 +6,8 @@ const PORT = process.env.PORT || 8080;
 const userRouter = require('./routes/user.routes');
 const todoRouter = require('./routes/todo.routes');
 
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
 app.use('/user', userRouter);
 app.use('/todo', todoRouter);
