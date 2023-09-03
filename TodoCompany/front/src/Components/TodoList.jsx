@@ -7,22 +7,37 @@ import {
   Grid,
   Stack,
   Skeleton,
+  Spinner,
+  Flex,
+  useToast,
+  Center,
 } from '@chakra-ui/react';
 import TodoItem from './TodoItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTodo, getSingleUserTodo } from '../Redux/Actions/TodoActions';
 
 const TodoList = () => {
+  const toast = useToast();
   const [todos, setTodos] = useState([
     { id: 1, text: 'Task 1' },
     { id: 2, text: 'Task 2' },
     // Add more initial todos as needed.
   ]);
-  const { data, laoding } = useSelector((state) => state.Todo);
+  const { data, loading } = useSelector((state) => state.Todo);
   const dispatch = useDispatch();
   const [newTodoText, setNewTodoText] = useState('');
   console.log(data);
   const handleAddTodo = (e) => {
+    if (!newTodoText) {
+      return toast({
+        title: 'Account created.',
+        description: "We've created your account for you.",
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+
     dispatch(addTodo(newTodoText)).then((res) => {
       dispatch(getSingleUserTodo());
     });
@@ -44,17 +59,18 @@ const TodoList = () => {
   useEffect(() => {
     dispatch(getSingleUserTodo());
   }, []);
-  if (laoding) {
-    return (
-      <Stack>
-        <Skeleton height="50px" />
-        <Skeleton height="50px" />
-        <Skeleton height="50px" />
-      </Stack>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <Stack>
+  //       <Skeleton height="50px" />
+  //       <Skeleton height="50px" />
+  //       <Skeleton height="50px" />
+  //     </Stack>
+  //   );
+  // }
   return (
     <VStack
+      p={10}
       spacing={4}
       bgGradient="linear(to-r, orange.200, blue.400)"
       height={'full'}
@@ -67,28 +83,52 @@ const TodoList = () => {
             value={newTodoText}
             onChange={(e) => setNewTodoText(e.target.value)}
             placeholder="Add a new TODO"
-            maxLength={10}
           />
           <Button onClick={handleAddTodo} colorScheme="teal" mt={2} isFullWidth>
             Add Todo
           </Button>
         </form>
       </Box>
-      <Grid
-        width={'70%'}
-        gridTemplateColumns={[
-          'repeat(1,1fr)',
-          'repeat(1,1fr)',
-          'repeat(2,1fr)',
-          'repeat(3,1fr)',
-        ]}
-        gap={10}
-      >
-        {data.length !== 0 &&
-          data?.map((todo) => (
-            <TodoItem key={todo.id} todo={todo} onDelete={handleDeleteTodo} />
-          ))}
-      </Grid>
+      {!loading ? (
+        <Grid
+          width={'70%'}
+          gridTemplateColumns={[
+            'repeat(1,1fr)',
+            'repeat(1,1fr)',
+            'repeat(2,1fr)',
+            'repeat(3,1fr)',
+          ]}
+          gap={10}
+        >
+          {!loading ? (
+            data?.map((todo) => (
+              <TodoItem key={todo.id} todo={todo} onDelete={handleDeleteTodo} />
+            ))
+          ) : (
+            <Center justifyContent="center" alignItems="center">
+              <Spinner
+                m={'auto'}
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                color="blue.500"
+                size="xl"
+              />
+            </Center>
+          )}
+        </Grid>
+      ) : (
+        <Center justifyContent="center" alignItems="center">
+          <Spinner
+            m={'auto'}
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        </Center>
+      )}
     </VStack>
   );
 };

@@ -8,15 +8,18 @@ const {
   USER_SIGNUP_ERROR,
 } = require('../Types/Auth.types');
 
-let backendUrl = process.env.REACT_APP_BACKEND_URL || `http://localost:8080`;
+let backendUrl = process.env.REACT_APP_BACKEND_URL;
+// || `https://ddtodo.onrender.com`;
 
 export const LoginAction = (cred) => async (dispatch, state) => {
   try {
     dispatch({ type: USER_LOGIN_LOADING });
-    const login = axios.post(`${backendUrl}/user/login`, cred);
+    const LoginRes = await axios.post(`${backendUrl}/user/login`, cred);
+    console.log(LoginRes);
+
     return dispatch({
       type: USER_LOGIN_SUCCESS,
-      payload: (await login).data.token,
+      payload: LoginRes.data,
     });
   } catch (er) {
     console.log('error:', er.message);
@@ -27,10 +30,12 @@ export const LoginAction = (cred) => async (dispatch, state) => {
 export const SignUPAction = (cred) => async (dispatch, state) => {
   try {
     dispatch({ type: USER_SIGNUP_LOADING });
-    axios.post(`${backendUrl}/user/signup`, cred);
+    await axios.post(`${backendUrl}/user/signup`, cred);
     return dispatch({ type: USER_SIGNUP_SUCCESS });
   } catch (er) {
     console.log('error:', er.message);
+    alert('User Already present Login');
+    
     return dispatch({ type: USER_SIGNUP_ERROR });
   }
 };

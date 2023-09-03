@@ -27,11 +27,25 @@ const Login = () => {
   };
   const handleClick = (e) => {
     e.preventDefault();
-    dispatch(LoginAction(cred));
-    return console.log(cred);
+    const { email, password } = cred;
+    if (!email || !password) {
+      return alert('Please Fill All feilds');
+    }
+    dispatch(
+      LoginAction({
+        ...cred,
+        email: email.trim(),
+        password: password.trim(),
+      })
+    );
+    return;
   };
   if (Auth.data.isAuth) {
     return <Navigate to={`/`} />;
+  }
+  if (Auth.error) {
+    alert('User not in database Please Signup');
+    return <Navigate to="/signup" />;
   }
   return (
     <Flex
@@ -40,6 +54,7 @@ const Login = () => {
       justifyContent="center"
       bgGradient="linear(to-l, #7928CA, #FF0080)"
     >
+      {}
       <Box
         p={8}
         width={['90%', '80%', '60%', '40%']} // Responsive width
@@ -81,6 +96,7 @@ const Login = () => {
               </FormControl>
 
               <Button
+                isLoading={Auth.loading}
                 type="submit"
                 colorScheme="teal"
                 size="lg"

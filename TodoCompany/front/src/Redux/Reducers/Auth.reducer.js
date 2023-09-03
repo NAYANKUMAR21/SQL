@@ -25,11 +25,17 @@ const AuthReducer = (state = UserInit, { type, payload }) => {
       };
     }
     case USER_LOGIN_SUCCESS: {
-      localStorage.setItem('token', payload);
+      console.log(payload);
+      localStorage.setItem('token', payload.token);
+      localStorage.setItem('name', payload.name);
+      localStorage.setItem('avatar', payload.avatar);
       return {
         ...state,
         loading: false,
         error: false,
+        signupError: false,
+        name: localStorage.getItem('name'),
+        avatar: localStorage.getItem('avatar'),
         data: {
           token: localStorage.getItem('token'),
           isAuth: localStorage.getItem('token') ? true : false,
@@ -40,7 +46,7 @@ const AuthReducer = (state = UserInit, { type, payload }) => {
       return {
         ...state,
         loading: false,
-        error: true,
+        signupError: true,
       };
     }
     case USER_SIGNUP_LOADING: {
@@ -48,6 +54,7 @@ const AuthReducer = (state = UserInit, { type, payload }) => {
         ...state,
         loading: true,
         error: false,
+        signupError: false,
       };
     }
     case USER_SIGNUP_SUCCESS: {
@@ -56,6 +63,9 @@ const AuthReducer = (state = UserInit, { type, payload }) => {
         ...state,
         loading: false,
         error: false,
+        signupError: false,
+        avatar: localStorage.getItem('avatar'),
+        name: localStorage.getItem('name'),
         data: {
           token: localStorage.getItem('token'),
           isAuth: localStorage.getItem('token') ? true : false,
@@ -66,9 +76,12 @@ const AuthReducer = (state = UserInit, { type, payload }) => {
     case USER_LOGOUT: {
       localStorage.removeItem('token');
       localStorage.removeItem('isSignup');
+      localStorage.removeItem('name');
+      localStorage.removeItem('avatar');
       return {
         loading: false,
         error: false,
+        signupError: false,
         data: {
           token: localStorage.getItem('token'),
           isAuth: localStorage.getItem('token') ? true : false,

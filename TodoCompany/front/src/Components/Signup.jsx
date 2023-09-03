@@ -14,17 +14,20 @@ import {
   Center,
 } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SignUPAction } from '../Redux/Actions/auth.actions';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Navigate } from 'react-router-dom';
+import { handleChangePicture } from '../Utils/cloud';
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const [cred, setCred] = useState({
     name: '',
+    avatar: '',
     email: '',
     password: '',
   });
+  const { isSigned, loading, signupError } = useSelector((state) => state.User);
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -32,15 +35,40 @@ const SignUp = () => {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCred({ ...cred, [name]: value });
+    if (e.target.name == 'avatar') {
+      setCred({ ...cred, [e.target.name]: e.target.files });
+    } else {
+      const { name, value } = e.target;
+      setCred({ ...cred, [name]: value });
+    }
   };
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
-    dispatch(SignUPAction(cred));
-    return console.log(cred);
+    const { name, avatar, email, password } = cred;
+    if (!name || !avatar || !email || !password) {
+      return alert('Please Fill All feilds');
+    }
+    let image = await handleChangePicture(cred.avatar);
+    //{/*  */}
+    // dispatch(SignUPAction({ ...cred, avatar: image }));
+    image = image.trim();
+    dispatch(
+      SignUPAction({
+        ...cred,
+        name: name.trim(),
+        email: email.trim(),
+        password: password.trim(),
+        avatar: image,
+      })
+    );
+    return;
   };
-
+  if (signupError) {
+    return <Navigate to="/login" />;
+  }
+  if (isSigned) {
+    return <Navigate to="/login" />;
+  }
   return (
     <Flex
       minHeight="100vh"
@@ -74,7 +102,17 @@ const SignUp = () => {
                   _placeholder={{ color: 'gray.500' }}
                 />
               </FormControl>
-
+              <FormControl id="avatar" isRequired>
+                <FormLabel>Avatar</FormLabel>
+                <Input
+                  onChange={handleChange}
+                  name="avatar"
+                  type="file"
+                  placeholder="Upload File"
+                  focusBorderColor="teal.400"
+                  _placeholder={{ color: 'gray.500' }}
+                />
+              </FormControl>
               <FormControl id="email" isRequired>
                 <FormLabel>Email Address</FormLabel>
                 <Input
@@ -112,6 +150,7 @@ const SignUp = () => {
               </FormControl>
 
               <Button
+                isLoading={loading}
                 type="submit"
                 colorScheme="teal"
                 size="lg"

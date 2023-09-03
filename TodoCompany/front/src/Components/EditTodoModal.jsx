@@ -42,7 +42,6 @@ const EditTodoModal = ({ todo, onClose }) => {
             size={['sm', 'md', 'lg']}
             value={editedText}
             onChange={handleTextChange}
-            maxLength={10}
           />
         </ModalBody>
         <ModalFooter>

@@ -5,7 +5,8 @@ import {
   GET_TODO_SUCCESS,
 } from '../Types/Todo.types';
 
-let backendUrl = process.env.REACT_APP_BACKEND_URL || `http://localost:8080`;
+let backendUrl = process.env.REACT_APP_BACKEND_URL;
+// || `https://ddtodo.onrender.com`;
 console.log(backendUrl);
 export const getSingleUserTodo = () => async (dispatch, state) => {
   try {
