@@ -8,8 +8,8 @@ const {
   USER_SIGNUP_ERROR,
 } = require('../Types/Auth.types');
 
-let backendUrl = process.env.REACT_APP_BACKEND_URL;
-// || `https://ddtodo.onrender.com`;
+let backendUrl =
+  process.env.REACT_APP_BACKEND_URL || `https://ddtodo.onrender.com`;
 
 export const LoginAction = (cred) => async (dispatch, state) => {
   try {
@@ -34,8 +34,8 @@ export const SignUPAction = (cred) => async (dispatch, state) => {
     return dispatch({ type: USER_SIGNUP_SUCCESS });
   } catch (er) {
     console.log('error:', er.message);
-    alert('User Already present Login');
-    
+    alert('User Already present So Please Login');
+
     return dispatch({ type: USER_SIGNUP_ERROR });
   }
 };
