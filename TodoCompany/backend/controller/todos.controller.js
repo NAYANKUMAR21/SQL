@@ -2,9 +2,14 @@ const todoModel = require('../model/todo.model');
 const JWT_KEY = process.env.JWT_KEY;
 const jwt = require('jsonwebtoken');
 async function getAll(req, res) {
+  const token = req.headers.authorization;
   try {
-    const allTodos = await todoModel.find();
-    return res.status(201).send(allTodos);
+    if (token.length !== 0) {
+      const verify = jwt.verify(token, JWT_KEY);
+      let todos = await todoModel.findById(verify.id);
+      return res.status(201).send(todos);
+    }
+    return res.status(404).send({ message: 'User not authorized' });
   } catch (er) {
     return res.status(404).send({ message: er.message });
   }
