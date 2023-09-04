@@ -11,6 +11,7 @@ import {
   Flex,
   useToast,
   Center,
+  GridItem,
 } from '@chakra-ui/react';
 import TodoItem from './TodoItem';
 import { useDispatch, useSelector } from 'react-redux';
@@ -70,13 +71,14 @@ const TodoList = () => {
   // }
   return (
     <VStack
-      p={10}
-      spacing={4}
+      // p={10}
+
+      // spacing={4}
       bgGradient="linear(to-r, orange.200, blue.400)"
-      height={'full'}
+      // height={'full'}
     >
       <Box w={['90%', '80%', '70%', '60%', '50%']} borderRadius="md" p={4}>
-        <form action="" onSubmit={handleAddTodo}>
+        <form onSubmit={handleAddTodo}>
           <Input
             color={'white'}
             fontSize={'xl'}
@@ -84,25 +86,38 @@ const TodoList = () => {
             onChange={(e) => setNewTodoText(e.target.value)}
             placeholder="Add a new TODO"
           />
-          <Button onClick={handleAddTodo} colorScheme="teal" mt={2} isFullWidth>
+          <Button
+            onClick={handleAddTodo}
+            color="white"
+            bgColor={'blue.400'}
+            mt={2}
+            isFullWidth
+            _hover={{
+              bgColor: 'orange',
+            }}
+          >
             Add Todo
           </Button>
         </form>
       </Box>
       {!loading ? (
-        <Grid
-          width={'70%'}
-          gridTemplateColumns={[
-            'repeat(1,1fr)',
-            'repeat(1,1fr)',
-            'repeat(2,1fr)',
-            'repeat(3,1fr)',
-          ]}
-          gap={10}
-        >
+        <Box w={['100%', '100%', '100%', '60%']}>
           {!loading ? (
-            data?.map((todo) => (
-              <TodoItem key={todo.id} todo={todo} onDelete={handleDeleteTodo} />
+            data?.map((todo, index) => (
+              <Box
+                w="100%"
+                key={index}
+                mt="15px"
+                _hover={{
+                  boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;',
+                }}
+              >
+                <TodoItem
+                  key={todo.id}
+                  todo={todo}
+                  onDelete={handleDeleteTodo}
+                />
+              </Box>
             ))
           ) : (
             <Center justifyContent="center" alignItems="center">
@@ -116,7 +131,7 @@ const TodoList = () => {
               />
             </Center>
           )}
-        </Grid>
+        </Box>
       ) : (
         <Center justifyContent="center" alignItems="center">
           <Spinner

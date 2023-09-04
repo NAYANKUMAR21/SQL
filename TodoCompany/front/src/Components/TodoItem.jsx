@@ -34,7 +34,7 @@ const TodoItem = ({ todo, onDelete }) => {
         <EditTodoModal todo={todo} onClose={() => setIsEditing(false)} />
       ) : (
         <>
-          <Box width={['90%', '80%', '70%', '60%', '50%']}>
+          <Box width={['75%', '80%', '70%', '60%', '50%']}>
             <Text fontSize="lg" fontWeight="bold" mr={2}>
               {todo.title}
             </Text>
