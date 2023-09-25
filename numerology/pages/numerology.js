@@ -114,9 +114,6 @@ export default function ContactFormWithSocialButtons() {
               >
                 Based on Name and Date of Birth
               </Heading>
-              <Box textAlign={'centre'} fontSize={'10px'} color={'red'}>
-                <Text>(Do not write names which have P,V,X,Q letters)</Text>
-              </Box>
             </Box>
             <Stack
               spacing={{ base: 4, md: 8, lg: 20 }}
